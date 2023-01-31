@@ -28,5 +28,11 @@
   "name": "nextjs",
   "price": 40000,
   "status": "step6"
+ },
+ {
+  "id": 7,
+  "name": "hello",
+  "price": "1231231",
+  "status": "step21"
  }
 ]

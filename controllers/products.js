@@ -22,13 +22,14 @@ const createProduct = (req, res) => {
   const price = req.body.price;
   const status = req.body.status;
   const newProduct = {id, name, price, status};
-
+  products.push(newProduct);
+  
   fs.writeFile(path.join(__dirname, '..', 'model', 'products.json'), 
-  JSON.stringify(products, null, ' '), 'utf-8', (err)=>{
+  JSON.stringify(products, null, ' '), 'utf-8', 
+  (err)=>{
     console.log(err);
     res.send({success : false, message : '파일 쓰기 실패'});
   });
-  products.push(newProduct);
   // file로 쓰진 않음
   // res.send(newProduct);
   res.send({success : true, data : newProduct});
