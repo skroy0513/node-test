@@ -74,7 +74,7 @@ document.getElementById('submitBtn').addEventListener('click', ()=>{
   }
   console.log(user);
 
-  const url = 'http://localhost:3000/register'
+  const url = 'https://port-0-node-test-sop272gldk7qjen.gksl2.cloudtype.app/register'
   // fetch(url, {
   //   method : "POST",
   //   body:JSON.stringify(user),
