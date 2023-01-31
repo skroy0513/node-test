@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/register.css">
+  <title>회원가입</title>
+</head>
+<body>
+  <div class="register-container">
+    <h1>다음을 입력하세요.</h1>
+    <div class="register-box">
+      <form class="name-form">
+        <label for="userName">이름</label>
+        <input type="text" id="userName" placeholder="2글자 이상 문자로 입력하세요" required>
+        <p id="userNameErr">이름은 2글자 이상 문자로 입력하세요.</p>
+      </form>
+      <form class="userid-form">
+        <label for="userId">user ID</label>
+        <input type="text" id="userId" placeholder="5글자이상의 영문자와 4자리로 입력하세요" required>
+        <p id="userIdErr">ID는 5글자 이상 문자로 입력하세요.</p>
+      </form>
+      <form class="useremail-form">
+        <label for="userEmail">Email</label>
+        <input type="email" id="userEmail" placeholder="userid@naver.com" required>
+        <p id="userEmailErr">email은 userid@naver.com, user.id@naver.co.kr</p>
+      </form>
+      <form class="userphone-form">
+        <label for="userPhone">Phone</label>
+        <input type="text" id="userPhone" placeholder="(032)1234-1234">
+        <p id="userPhoneErr">(032)1234-1234, 032-1234-1234, 032 1234 1234</p>
+      </form>
+      <form class="userpassword-form">
+        <label for="userPwd">Password</label>
+        <input type="password" id="userPwd" placeholder="문자, 숫자, 특수문자를 포함한 8자리" required>
+        <p id="userPwdErr">대문자, 특수문자(!,@,#,$) 하나 이상 필수</p>
+      </form>
+      <form class="repassword-form">
+        <label for="userRepwd">Password 확인</label>
+        <input type="password" id="userRepwd" placeholder="비밀번호를 한번 더 입력하세요" required>
+        <p id="userRepwdErr">대문자, 특수문자(!,@,#,$) 하나 이상 필수</p>
+      </form>
+      <div>
+        <button id="submitBtn">회원가입</button>
+        <button id="resetBtn">취소</button>
+      </div>
+    </div>
+  </div>
+  <script src="/script/fetch.js"></script>
+  <script src="/script/register.js"></script>
+</body>
+</html>

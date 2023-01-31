@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+    버튼 : span, button, a
+   -->
+  <a href='register'>링크회원가입</a>
+  <button id="registerBtn">회원가입</button>
+  <a href="login">로그인</a>
+  <script>
+    document.getElementById('registerBtn').addEventListener('click', ()=>{
+      location.href = 'http://localhost:3000/register'
+      // <a href='http://localhost:3000/register'>회원가입</a>
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/register.css">
+  <title>회원가입</title>
+</head>
+<body>
+  <div class="search-container">
+    <h1>다음을 입력하세요.</h1>
+    <div class="search-box">
+      <form class="name-form">
+        <label for="userName">이름</label>
+        <input type="text" id="userName" placeholder="2글자 이상 문자로 입력하세요" autocomplete="off" required>
+        <p id="userNameErr">이름은 2글자 이상 문자로 입력하세요.</p>
+      </form>
+      <div>
+        <button id="searchIdBtn">아이디 찾기</button>
+        <button id="resetBtn">취소</button>
+      </div>
+    </div>
+  </div>
+  <div class="log"></div>
+  <script src="/script/fetch.js"></script>  
+  <script>
+    searchIdBtn.addEventListener('click', ()=>{
+      const userName = document.getElementById('userName');
+      const user = { userName : userName.value }
+
+      const url = `http://localhost:3000/searchId`;
+
+      fetchFunc.post(url, user)
+      .then(res => res.json())
+      .then(res =>{
+        if( res.success){
+          console.log(res.message.userId);
+          document.querySelector('.log').innerHTML = res.message.userId;
+        }else{
+          alert(res.message);
+          document.getElementById('userName').value = ""
+        }
+      })
+    })
+  </script>
+</body>
+</html>

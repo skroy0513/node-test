@@ -1,0 +1,32 @@
+[
+ {
+  "id": 1,
+  "name": "html",
+  "price": "40000",
+  "status": "step1"
+ },
+ {
+  "id": 2,
+  "name": "css",
+  "price": 40000,
+  "status": "step2"
+ },
+ {
+  "id": 4,
+  "name": "nodejs",
+  "price": 40000,
+  "status": "step4"
+ },
+ {
+  "id": 5,
+  "name": "react",
+  "price": 40000,
+  "status": "step5"
+ },
+ {
+  "id": 6,
+  "name": "nextjs",
+  "price": 40000,
+  "status": "step6"
+ }
+]
