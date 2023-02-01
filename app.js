@@ -9,6 +9,7 @@ const login = require('./routes/login')
 const searchId = require('./routes/searchId')
 const searchPwd = require('./routes/searchPwd');
 const products = require('./routes/products')
+const root = require('./routes/root');
 
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.json());
@@ -21,6 +22,7 @@ app.use((req, res, next)=>{
 
 // 회원가입 버튼을 클릭하면 아래의 register.html 열기
 // express의 사용자 미들웨어를 만듬
+app.use('/', root);
 app.use('/register', registers);
 app.use('/login', login);
 app.use('/searchId', searchId);
