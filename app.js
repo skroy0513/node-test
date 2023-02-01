@@ -10,6 +10,7 @@ const searchId = require('./routes/searchId')
 const searchPwd = require('./routes/searchPwd');
 const products = require('./routes/products')
 const root = require('./routes/root');
+const employees = require('./routes/employees');
 
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.json());
@@ -27,6 +28,7 @@ app.use('/register', registers);
 app.use('/login', login);
 app.use('/searchId', searchId);
 app.use('/searchPwd', searchPwd);
+app.use('/employees', employees);
 
 app.get('^/$|/index(.html)?', (req, res)=>{
   res.sendFile(path.join(__dirname, 'views', 'index.html'))
