@@ -11,6 +11,10 @@ const searchPwd = require('./routes/searchPwd');
 const products = require('./routes/products')
 const root = require('./routes/root');
 const employees = require('./routes/employees');
+const dotenv = require('dotenv');
+dotenv.config();
+
+const PORT = process.env.PORT || 3500;
 
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.json());
@@ -39,6 +43,6 @@ app.get('/*', (req, res)=>{
   res.send('file not found');
 })
 
-app.listen(3000, ()=>{
-  console.log('app listening', 3000);
+app.listen(PORT, ()=>{
+  console.log('app listening', PORT);
 })

@@ -1,5 +1,22 @@
-const connection =require('../model/db');
-const pool = connection();
+const mariadb = require('mariadb');
+
+// const pool = mariadb.createPool({
+//   host : 'svc.gksl2.cloudtype.app',
+//   user : 'root',
+//   port : '32514',
+//   database : 'test10',
+//   password : '12345',
+//   connectionLimit : 5
+// })
+
+const pool = mariadb.createPool({
+  host : '127.0.0.1',
+  user : 'root',
+  port : '3306',
+  database : 'mystory',
+  password : '12345',
+  connectionLimit : 5
+})
 
 const getEmployees = async (req, res)=>{
   let conn;
@@ -21,8 +38,8 @@ const getEmployee = async (req, res)=>{
   let conn;
   try{
     conn = await pool.getConnection();
-    const sql = `SELECT * FROM employees WHERE emp_no = ?;`;
-    const rows = await conn.query(sql, [emp_no]);
+    const sql = `SELECT * FROM employees WHERE emp_no = ${emp_no};`;
+    const rows = await conn.query(sql);
     res.json(rows)
   }catch(err){
     console.log(err);
@@ -38,8 +55,8 @@ const createEmployee = async (req, res)=>{
   let conn;
   try{
     conn = await pool.getConnection();
-    const sqlCheck = `select count(*) as cnt from employees where emp_no = ?;`
-    const returnCheck = await conn.query(sqlCheck, [emp_no]);
+    const sqlCheck = `select count(*) as cnt from employees where emp_no = ${emp_no};`
+    const returnCheck = await conn.query(sqlCheck);
     console.log(returnCheck);
 
     if(parseInt(returnCheck[0].cnt) === 1){
@@ -49,8 +66,8 @@ const createEmployee = async (req, res)=>{
 
     const sql = `insert into employees(
       emp_no, birth_date, first_name, last_name, gender, hire_date) 
-      values (?, ?, ?, ?, ?, ?);`;
-    const rows = await conn.query(sql, [emp_no, birth_date, first_name, last_name, gender, hire_date]);
+      values ('${emp_no}', '${birth_date}', '${first_name}', '${last_name}', '${gender}', '${hire_date}');`;
+    const rows = await conn.query(sql);
     // Query OK, 1 row affected (0.003 sec)
     console.log(rows);
     // { affectedRows: 1, insertId: 0n, warningStatus: 0 } 
@@ -74,8 +91,8 @@ const deleteEmployee = async (req, res)=>{
   try{
     conn = await pool.getConnection();
 
-    const sqlCheck = `select count(*) as cnt from employees where emp_no = ?;`
-    const returnCheck = await conn.query(sqlCheck, [emp_no]);
+    const sqlCheck = `select count(*) as cnt from employees where emp_no = ${emp_no};`
+    const returnCheck = await conn.query(sqlCheck);
     console.log(returnCheck);
 
     // 데이터가 없으면 삭제할 필요 없음
@@ -84,8 +101,8 @@ const deleteEmployee = async (req, res)=>{
       return res.json(resMessage);
     }
 
-    const sql = `delete from employees where emp_no = ?;`;
-    const rows = await conn.query(sql, [emp_no]);
+    const sql = `delete from employees where emp_no = ${emp_no};`;
+    const rows = await conn.query(sql);
     // Query OK, 1 row affected (0.003 sec)
     console.log(rows);
     // { affectedRows: 1, insertId: 0n, warningStatus: 0 } 
@@ -109,8 +126,8 @@ const updateEmployee = async (req, res)=>{
   try{
     conn = await pool.getConnection();
 
-    const sqlCheck = `select count(*) as cnt from employees where emp_no = ?;`
-    const returnCheck = await conn.query(sqlCheck, [emp_no]);
+    const sqlCheck = `select count(*) as cnt from employees where emp_no = ${emp_no};`
+    const returnCheck = await conn.query(sqlCheck);
     console.log(returnCheck);
 
     if(parseInt(returnCheck[0].cnt) === 0){
