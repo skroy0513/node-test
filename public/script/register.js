@@ -66,15 +66,16 @@ document.getElementById('userRepwd').addEventListener('input', (event)=>{
 
 document.getElementById('submitBtn').addEventListener('click', ()=>{
   const user = {
-    user_name : userName.value,
+    userName : userName.value,
     userId : userId.value,
     userEmail : userEmail.value,
     userPhone : userPhone.value,
-    userPassword : userPwd.value,
+    userPwd : userPwd.value,
   }
   console.log(user);
 
-  const url = 'https://port-0-node-test-sop272gldk7qjen.gksl2.cloudtype.app/register'
+  // const url = 'https://port-0-node-test-sop272gldk7qjen.gksl2.cloudtype.app/register'
+  const url = 'http://localhost:3200/users'
   // fetch(url, {
   //   method : "POST",
   //   body:JSON.stringify(user),
@@ -82,5 +83,8 @@ document.getElementById('submitBtn').addEventListener('click', ()=>{
   // })
   fetchFunc.post(url, user)
   .then(res => res.json())
-  .then(res=>console.log(res))
+  .then(res=>{
+    console.log(res);
+    alert(res.message);
+  })
 })

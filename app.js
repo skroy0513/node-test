@@ -11,6 +11,7 @@ const searchPwd = require('./routes/searchPwd');
 const products = require('./routes/products')
 const root = require('./routes/root');
 const employees = require('./routes/employees');
+const users = require('./routes/users');
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -25,20 +26,20 @@ app.use((req, res, next)=>{
   next();
 })
 
-// 회원가입 버튼을 클릭하면 아래의 register.html 열기
 // express의 사용자 미들웨어를 만듬
 app.use('/', root);
 app.use('/register', registers);
 app.use('/login', login);
 app.use('/searchId', searchId);
 app.use('/searchPwd', searchPwd);
+app.use('/products', products);
 app.use('/employees', employees);
+app.use('/users', users);
 
 app.get('^/$|/index(.html)?', (req, res)=>{
   res.sendFile(path.join(__dirname, 'views', 'index.html'))
 })
 
-app.use('/products', products);
 app.get('/*', (req, res)=>{
   res.send('file not found');
 })

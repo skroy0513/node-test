@@ -1,5 +1,7 @@
 const path = require('path');
 const users = require('../model/users');
+const connection = require('../model/db');
+const pool = connection();
 
 const loginHandle = (req, res)=>{
   res.sendFile(path.join(__dirname, '..', 'views', 'login.html'))
@@ -20,19 +22,30 @@ const paramLoginHandle = (req, res)=>{
   res.send(resData);
 }
 
-const postLoginHandle = (req, res)=>{
-  // res.sendFile(path.join(__dirname, 'login.html'))
+const getLogin = async (req, res)=>{
   const { userId, userPwd } = req.body;
-  console.log(userId, userPwd);
-  const user = users.find( user => user.userId === userId && user.userPwd === userPwd)
-  let resData = {}
-  if(user){
-    resData = { success : true, message : user}
-  }else{
-    resData = { success : false, message : "아이디 또는 비밀번호를 확인하세요."}
-  }
+  let conn;
+  try{
+    conn = await pool.getConnection();
 
-  res.send(resData);
+    const sqlCheck = `select count(*) as cnt from users where userId = ? and userPwd = ?;`
+    const returnCheck = await conn.query(sqlCheck, [userId, userPwd]);
+    console.log(returnCheck);
+    const data = {userId, userPwd}
+
+    // 데이터가 없으면 로그인 못함
+    if(parseInt(returnCheck[0].cnt) === 0){
+      const resMessage = { success : false, message : `아이디, 비번을 확인하세요.` }
+      return res.json(resMessage);
+    }else{
+      const resMessage = { success : true, message : data};
+      res.json(resMessage);
+    }
+  }catch(err){
+    console.log(err);
+  }finally{
+    if( conn ){conn.end()};
+  }
 }
 
-module.exports = {postLoginHandle, paramLoginHandle, loginHandle};
+module.exports = {getLogin, paramLoginHandle, loginHandle};

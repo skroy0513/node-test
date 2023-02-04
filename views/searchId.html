@@ -29,7 +29,7 @@
       const userName = document.getElementById('userName');
       const user = { userName : userName.value }
 
-      const url = `http://localhost:3000/searchId`;
+      const url = `http://localhost:3200/searchId`;
 
       fetchFunc.post(url, user)
       .then(res => res.json())
