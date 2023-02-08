@@ -35,9 +35,10 @@ const getLogin = async (req, res)=>{
 
     // 데이터가 없으면 로그인 못함
     if(parseInt(returnCheck[0].cnt) === 0){
-      const resMessage = { success : false, message : `아이디, 비번을 확인하세요.` }
+      const resMessage = { success : false, message : `아이디, 패스워드를 확인하세요.` }
       return res.json(resMessage);
     }else{
+      res.cookie('user', data.userId);
       const resMessage = { success : true, message : data};
       res.json(resMessage);
     }
@@ -48,4 +49,9 @@ const getLogin = async (req, res)=>{
   }
 }
 
-module.exports = {getLogin, paramLoginHandle, loginHandle};
+const logoutHandle = (req, res)=> {
+  res.clearCookie('user');
+  res.send({success:true, message:'로그아웃'});
+}
+
+module.exports = {getLogin, paramLoginHandle, loginHandle, logoutHandle};

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .setCookie-container{
+            width: 500px; height: 150px;
+            background-color: black;
+            color:#fff; 
+            position: absolute;
+            z-index: 99;
+            right: 100px; 
+            bottom: 0px; 
+        }
+        .mainBanner-container{
+            width: 250px;
+            height: 300px;
+            background-color: pink;
+            position: absolute;
+        }
+        .mainBanner-container > div {
+            position: absolute;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>쿠키</h1>
+    <button class="delCookie">쿠키삭제</button>
+
+    <div class="setCookie-container">
+        쿠키에 대한 정보를 저장하겠습니다. 
+        <a href="#">자세히보기</a>
+        <button>확인</button>
+    </div>
+    <div class="mainBanner-container">
+        <div class="mainBanner-body">Lorem ipsu</div>
+        <div>
+            <input type="checkbox" id="onedayCheck"><label for="onedayCheck">하루동안 보지 않기</label>
+            <button id="closeBtn">닫기</button>
+        </div>
+    </div>
+
+    <div>
+        웹브라우저 <-> 웹서버 데이터를 주고 받기 위한 통신 규칙
+        개인인증정보
+
+        //쿠키 확인 
+        console.log(document.cookie);
+
+        //쿠키 데이터 
+        Name, value, Expires : 쿠키가 삭제되는 날짜
+    </div>
+    <script>
+        function setCookieHandle(name, value, day){
+            const today = new Date();            
+            today.setDate(today.getDate()+day); // 30일동안 유지 
+            
+            const test1 = `${name}=${value};Expires=${today.toUTCString()}`;  
+            document.cookie = `Name=skroy0513;max-age=${60*60*24*30}`;
+            document.cookie = `lastName=lee;max-age=${10}`; // 10초 동안 유지되는 쿠키
+            document.cookie = test1;  
+        }
+
+        const setCookieContainer = document.querySelector('.setCookie-container button');
+        setCookieContainer.addEventListener('click', function(){
+            setCookieHandle('brand', 'mybrand', 30);
+            document.querySelector('.setCookie-container').style.display = "none"
+        })
+
+        document.addEventListener('DOMContentLoaded', ()=>{
+            console.log( document.cookie );
+            // brand=mac4; test1=test1; test2=test2
+            const cookieAry = document.cookie.split(';');
+            cookieAry.forEach( ary =>{
+                if(ary.includes('mybrand')){
+                    document.querySelector('.setCookie-container').style.display = "none"
+                }else{
+                    document.querySelector('.setCookie-container').style.display = "block"
+                }
+            })
+        })
+
+        document.querySelector('.delCookie').addEventListener('click', ()=>{
+            const cookieAry = document.cookie.split(';');
+            cookieAry.forEach( ary =>{
+                if(ary.includes('mybrand')){
+                    setCookieHandle('brand', 'mybrand', -1); // 삭제 // 어제 날짜로 만들기
+                } 
+            })
+        })
+    </script>
+    <script>
+        onedayCheck.addEventListener('change', ()=>{
+            console.log(onedayCheck.checked);
+            if(onedayCheck.checked){
+                setCookieHandle('oneday', 'done',30)
+            }else{
+                setCookieHandle('oneday','not', 30)
+            }
+        })
+
+        // 쿠키 가져오기
+        function getCookies(){
+
+            const cookies = document.cookie;
+            const cookieAry = cookies.split(';');
+            
+            cookieAry.forEach(cookie => {
+                if(cookie.includes('done')){
+                    document.querySelector('.mainBanner-container').style.display = 'none'
+                }else{
+                    document.querySelector('.mainBanner-container').style.display =
+                    'block'
+                }
+            })
+        }
+        getCookies();
+        closeBtn.addEventListener('click', ()=>{
+            document.querySelector('.mainBanner-container').style.display = 'none'
+        })
+    </script>
+    <!-- <script>
+        const today = new Date();
+        today.setDate(today.getDate()-1); // 어제날짜 // 쿠키삭제
+        today.setDate(today.getDate()+1); // 1일동안 유지 // 내일 삭제
+        today.setDate(today.getDate()+10); // 10일동안 유지 
+        
+        const setCookie = `brand=mac;Expires=${today.toUTCString()}`;
+        const testCookie = `test=one;Expires=${today.toUTCString()}`;
+
+        document.cookie = setCookie;
+        document.cookie = testCookie;
+        console.log(document.cookie);
+    </script> -->
+</body>
+</html>

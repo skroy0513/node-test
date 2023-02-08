@@ -18,6 +18,7 @@
 </head>
 <body>
   <header>
+    <h2></h2>
     <div class="header-container flex">
       <h1>brand name</h1>
       <nav class="lnb">
@@ -41,6 +42,21 @@
       location.href = 'http://localhost:3200/register'
       // <a href='http://localhost:3200/register'>회원가입</a>
     }) 
+  </script>
+  <script>
+    function getcookie(){
+      const cookies = document.cookie;
+      const cookieAry = document.cookie.split(';');
+
+      cookieAry.forEach( cookie =>{
+        if(cookie.includes('user')){
+          document.querySelector('h2').innerHTML = cookies;
+        }else{
+          document.querySelector('h2').innerHTML = '로그인';
+        }
+      })
+    }
+    getcookie()
   </script>
 </body>
 </html>

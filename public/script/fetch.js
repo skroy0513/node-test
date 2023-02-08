@@ -16,7 +16,7 @@ const fetchFunc = {
       headers : {'Content-Type' : 'application/json;charset=utf-8'}
     })
   },
-  delet(url, payload){
+  delete(url, payload){
     return fetch(url, {
       method : 'DELETE'
     })

@@ -5,6 +5,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/styles/login.css">
+  <style>
+    .logout-container{
+      display: none;
+    }
+  </style>
   <title>로그인</title>
 </head>
 <body>
@@ -30,7 +35,11 @@
       </div>
     </div>
   </div>
-  <div class="userid-view"></div>
+  <div class="logout-container">
+    <div class="userid-view">
+    </div>
+    <button id="logoutBtn">로그아웃하기</button>
+  </div>
   <script src="/script/fetch.js"></script>
   <script>
     loginBtn.addEventListener('click', ()=>{
@@ -51,6 +60,7 @@
           console.log(res.message);
           document.querySelector('.userid-view').innerHTML = `${res.message.userId}님이 로그인하셨습니다.`;
           document.querySelector('.login-container').style.display = "none";
+          document.querySelector('.logout-container').style.display = "block";
         }else{
           alert(res.message);
           document.getElementById('userId').value = ""
@@ -58,6 +68,47 @@
         }
       })
     })
+  </script>
+  <script>
+    logoutBtn.addEventListener('click', ()=>{
+      // const url = `https://port-0-node-test-sop272gldk7qjen.gksl2.cloudtype.app/login`;
+      const url = `http://localhost:3200/login`;
+      fetchFunc.delete(url)
+      .then(res => res.json())
+      .then(res =>{
+        if( res.success){
+          document.getElementById('userId').value = "";
+          document.getElementById('userPwd').value = "";
+          document.querySelector('.userid-view').innerHTML = "";
+          document.querySelector('.login-container').style.display = "block";
+          document.querySelector('.logout-container').style.display = "none";
+        }else{
+          alert(res.message);
+        }
+      })
+    })
+  </script>
+  <script>
+    function getcookie(){
+      const cookies = document.cookie;
+      const cookieAry = document.cookie.split(';');
+      const userOb = cookieAry.find( cookie => cookie.includes("user"));
+      //user = 이름
+      const userName = userOb.split('=');
+      console.log(userName, userName[1]);
+
+      cookieAry.forEach( cookie =>{
+        if(cookie.includes('user')){
+          document.querySelector('.userid-view').innerHTML = userName[1];
+          document.querySelector('.logout-container').style.display = 'block';
+          document.querySelector('.login-container').style.display = 'none';
+        }else{
+          document.querySelector('.logout-container').style.display = 'none';
+          document.querySelector('.login-container').style.display = 'block';
+        }
+      })
+    }
+    getcookie()
   </script>
 </body>
 </html>
